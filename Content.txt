@@ -1,0 +1,27 @@
+this app is an internal app used to manage jobs for fiber optics
+
+the admin will create a job making the autopsy and filling the customer data
+when the autopsy is made the admin will assign the job to a technician or more
+when the autopsy is made the admin has to validate the job before assigning it to a technician
+the autopsy has a form to fill and the  technician provide videos how the autopsy has to been
+
+when the admin assign the job to a technician can assign it to one or more technicians and has to deside the date and the time of the job
+
+when the technician go to the job location the technician has to push the button start job and the job start time will be registered
+when the technician finish the job the technician has to push the button finish job and the job finish time will be registered but the job will be finished only when the provided photo will be assigned
+and the admin will validate the job as finished
+
+if two or more technicians are assigned to the job the job will be finished when all the technicians push the button finish job and the time diff doent matter 
+  sometimes we can assign two technicians and one finish or go before the other
+
+  if there is a job between the start job and finish job the technician can pause the job and the pause time will be registered
+  when the technician finish the other job the technician can resume the job and the resume time will be registered
+
+the admin can see the job status in real time and can see the start time, finish time, pause time and resume time for each technician
+each technician will receive different notifications when the job is assigned, when the job is about to start, when the job is paused and when the job is resumed
+the admin can generate reports for each job and can see the total time spent for each technician
+
+
+
+
+
