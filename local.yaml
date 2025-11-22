@@ -1,0 +1,16 @@
+services:
+  foc-internal_server:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    image: foc-internal_server
+    container_name: foc-internal_server
+    volumes:
+      - ./server:/server
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    # networks:
+    #   - myApps_nw
