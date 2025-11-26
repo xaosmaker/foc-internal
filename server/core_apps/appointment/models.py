@@ -12,6 +12,8 @@ class Appointment(BaseModel):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     status = models.IntegerField(choices=StatusCodes)
 
+    objects = models.Manager()
+
     def __str__(self):
         return f"{self.full_name} - {self.date_time}"
 
