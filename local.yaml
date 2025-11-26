@@ -1,10 +1,10 @@
 services:
-  foc-internal_server:
+  foc-internal-server:
     build:
       context: server
       dockerfile: Dockerfile
-    image: foc-internal_server
-    container_name: foc-internal_server
+    image: foc-internal-server
+    container_name: foc-internal-server
     volumes:
       - ./server:/server
     expose:
@@ -14,3 +14,15 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     # networks:
     #   - myApps_nw
+    #
+  foc-internal-client:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    image: foc-internal-client
+    container_name: foc-internal-client
+    volumes:
+      - ./client:/client
+    ports:
+      - "3050:3000"
+    command: pnpm dev

@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 
 
+# WARN: on change of status code please update the front End
 class StatusCodes(models.IntegerChoices):
     """
     CANCELED = the work is cancelled
