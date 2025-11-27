@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from core_apps.common.views import StatusCodeListView
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import (
@@ -38,4 +39,5 @@ urlpatterns = [
         name="redoc",
     ),
     path("api/", include("core_apps.appointment.urls")),
+    path("api/", include("core_apps.common.urls")),
 ]

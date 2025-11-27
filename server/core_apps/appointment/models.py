@@ -1,7 +1,6 @@
+from core_apps.common.models import BaseModel, Location, StatusCodes
 from django.contrib.auth import get_user_model
 from django.db import models
-
-from core_apps.common.models import BaseModel, Location, StatusCodes
 
 
 class Appointment(BaseModel):
@@ -19,4 +18,4 @@ class Appointment(BaseModel):
         return f"{self.full_name} - {self.appointment_date}"
 
     class Meta:
-        ordering = ["appointment_date"]
+        ordering = ["appointment_date__date", "status", "appointment_date__time"]

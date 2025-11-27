@@ -32,7 +32,7 @@ class StatusCodes(models.IntegerChoices):
 
     # INFO: color code statuses for UI
 
-    CANCELLED = (0, "Cancelled")  # red
+    CANCELLED = (100, "Cancelled")  # red
 
     INSPECTION_PENDING = (10, "Inspection Pending")  # yellow
     INSPECTION_DONE = (11, "Inspection Done")  # brown
@@ -54,6 +54,8 @@ class BaseModel(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
 
     class Meta:
         abstract = True

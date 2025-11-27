@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
 import {
   Card,
   CardContent,
@@ -11,7 +12,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-export default function CreateAppointmentForm() {
+import type { StatusCodes } from "@/shared/fetchers";
+import { AppointmentSchema } from "./AppointmentSchema";
+export default function CreateAppointmentForm({}: {
+  statusCodes: StatusCodes;
+}) {
+  const { register } = useForm<AppointmentSchema>();
   return (
     <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
@@ -25,25 +31,34 @@ export default function CreateAppointmentForm() {
         <form>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="full_name">Full Name</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
+                id="full_name"
+                type="text"
+                placeholder="John Doe"
                 required
+                {...register("full_name")}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="appointment_date">Appointment Date</Label>
+              <Input
+                id="appointment_date"
+                type="dateime-local"
+                required
+                {...register("appointment_date")}
               />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-              <Input id="password" type="password" required />
+              <Label htmlFor="address">Adress</Label>
+              <Input
+                id="address"
+                type="text"
+                placeholder="St. Peters 17"
+                required
+                {...register("address")}
+              />
             </div>
           </div>
         </form>
