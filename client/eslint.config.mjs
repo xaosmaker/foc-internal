@@ -2,6 +2,9 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
+import boundaries from "eslint-plugin-boundaries";
+import conf from "./eslint.boundaries.json" with { type: "json" };
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -13,6 +16,11 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+
+  {
+    plugins: { boundaries: boundaries },
+    ...conf,
+  },
 ]);
 
 export default eslintConfig;
