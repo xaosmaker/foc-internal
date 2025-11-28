@@ -5,7 +5,11 @@ export async function getAppointments() {
   try {
     const res = await fetch(`${BASE_URL}/api/appointments/`);
     const data: Appointment[] = await res.json();
-    return data;
+    const localTimeData = data.map((item) => {
+      item.appointment_date = new Date(item.appointment_date).toLocaleString();
+      return item;
+    });
+    return localTimeData;
   } catch (e) {
     console.log(e);
     return [];

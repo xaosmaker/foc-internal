@@ -22,7 +22,7 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     cell: ({ row, table }) => {
       const code = row.original.status;
 
-      const statusCode = table.options.meta?.statusCodes.find(
+      const statusCode = table.options.meta?.statusCodes?.find(
         (data) => data.value === code,
       );
       const variant = statusCode!.label.replace(" ", "_") as StatusColors;
@@ -38,13 +38,18 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     accessorKey: "appointment_date",
     header: "Appointment Date",
     cell: ({ row: { original } }) => {
-      const date = new Date(original.appointment_date);
-      return date.toLocaleString();
+      return original.appointment_date;
     },
   },
   {
     accessorKey: "location",
     header: "Location",
+    cell: ({ row, table }) => {
+      const location = table.options.meta?.locations?.find(
+        (item) => item.pkid === row.original.location,
+      );
+      return location?.name;
+    },
   },
   {
     id: "Appointment Actions",

@@ -1,11 +1,12 @@
 import { DataTable } from "@/components/data-table";
 import { getAppointments } from "@/features/appointment/fetchers";
 import { appointmentTableColumns } from "@/features/appointment/tableCols";
-import { getStatusCodes } from "@/shared/fetchers";
+import { getLocations, getStatusCodes } from "@/shared/fetchers";
 
 export default async function AppointmentPage() {
   const appointments = await getAppointments();
   const statusCodes = await getStatusCodes();
+  const locations = await getLocations();
 
   return (
     <>
@@ -14,6 +15,7 @@ export default async function AppointmentPage() {
         columns={appointmentTableColumns}
         data={appointments}
         statusCodes={statusCodes}
+        locations={locations}
       />
     </>
   );
