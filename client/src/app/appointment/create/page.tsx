@@ -1,8 +1,8 @@
 import CreateAppointmentForm from "@/features/appointment/CreateAppointmentForm";
-import { getStatusCodes } from "@/shared/fetchers";
+import { getLocations } from "@/shared/fetchers";
 
 export default async function CreateAppointmentPage() {
-  const statusCodes = await getStatusCodes();
+  const location = await getLocations();
 
-  return <CreateAppointmentForm statusCodes={statusCodes} />;
+  return <CreateAppointmentForm location={location} />;
 }
