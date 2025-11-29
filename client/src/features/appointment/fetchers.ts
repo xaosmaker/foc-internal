@@ -1,11 +1,11 @@
 import { BASE_URL } from "@/lib/baseUrl";
-import { Appointment } from "./types";
+import { Appointment, AppointmentISO } from "./types";
 
 export async function getAppointments() {
   try {
     const res = await fetch(`${BASE_URL}/api/appointments/`);
-    const data: Appointment[] = await res.json();
-    const localTimeData = data.map((item) => {
+    const data: AppointmentISO[] = await res.json();
+    const localTimeData: Appointment[] = data.map((item) => {
       item.appointment_date = new Date(item.appointment_date).toLocaleString();
       return item;
     });

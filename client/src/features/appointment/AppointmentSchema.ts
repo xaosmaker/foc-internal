@@ -1,15 +1,5 @@
 import { z } from "zod/v4";
 
-export type Appointment = {
-  full_name: string;
-  telephone: string;
-  address: string;
-  appointment_date: Date;
-  status: number;
-  location: number;
-  user: number;
-};
-
 export const appointmentSchema = z.object({
   full_name: z.string().trim(),
   telephone: z
