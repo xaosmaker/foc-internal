@@ -1,3 +1,5 @@
+import { auth } from "@/lib/auth";
+
 export async function basePostRequest<T>({
   url,
   data,
@@ -5,9 +7,34 @@ export async function basePostRequest<T>({
   url: string;
   data: T;
 }) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("Invalid Credential from Session");
+  }
+
   return await fetch(url, {
     method: "post",
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      cookie: session.user.access,
+    },
     body: JSON.stringify(data),
+  });
+}
+
+export async function baseGetRequest({ url }: { url: string }) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("Invalid Credential from Session");
+  }
+
+  return await fetch(url, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      cookie: session.user.access,
+    },
   });
 }

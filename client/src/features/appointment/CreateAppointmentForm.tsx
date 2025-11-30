@@ -54,7 +54,7 @@ export default function CreateAppointmentForm({
     //INFO: need to move the logic elsewhare for the mobile app
     const date = new Date(data.date);
     const [hours, mins] = data.time.split(":");
-    date.setHours(Number(hours) || 0, Number(mins) || 0);
+    date.setUTCHours(Number(hours) || 0, Number(mins) || 0);
 
     const appointment_date = date.toISOString();
     const { success } = z.iso.datetime().safeParse(appointment_date);
@@ -66,7 +66,6 @@ export default function CreateAppointmentForm({
       Object.entries(data).filter(([key, _]) => key != "date" && key != "time"),
     );
     appointmentData["appointment_date"] = appointment_date;
-    console.log(appointmentData, 125);
     startTransition(() => {
       action(appointmentData);
     });
@@ -134,7 +133,7 @@ export default function CreateAppointmentForm({
                 <FormField
                   value={value}
                   onChange={(e) => onChange(e.target.value)}
-                  type="time"
+                  type="text"
                   id="appointment_time"
                   label="Appointment Time"
                   error={errors.time?.message}

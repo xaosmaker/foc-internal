@@ -13,17 +13,8 @@ class AppointmentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # WARN: when i fix the auth i have to set the user to the user that validtates
         # the request
-        user = get_user_model().objects.all()
-        user = user[0]
+        user = self.context["request"].user
 
-        print(
-            123,
-            validated_data,
-            "valData",
-            validated_data["location"],
-            type(validated_data["location"]),
-            user,
-        )
         appointment = Appointment.objects.create(**validated_data, user=user)
 
         return appointment

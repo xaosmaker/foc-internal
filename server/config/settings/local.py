@@ -9,3 +9,5 @@ SECRET_KEY = (
 DEBUG = True
 
 ALLOWED_HOSTS = ["foc-internal-server", "localhost"]
+
+COOKIE_SECURE = False
