@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/input";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { HTMLInputTypeAttribute } from "react";
 
-interface FormFieldProps {
+interface FormFieldProps extends React.ComponentProps<"input"> {
   label: string;
   id: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
   error?: string;
@@ -19,6 +19,7 @@ export default function FormField({
   register,
   error,
   type = "text",
+  ...props
 }: FormFieldProps) {
   return (
     <div className="grid gap-2">
@@ -29,6 +30,7 @@ export default function FormField({
         type={type}
         placeholder={placeholder}
         {...register}
+        {...props}
         className=""
       />
 
