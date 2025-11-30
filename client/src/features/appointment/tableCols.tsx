@@ -2,6 +2,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { Appointment } from "./types";
 import StatusCodeColors, { StatusColors } from "@/components/StatusCodeColors";
+import DropDownActions from "@/components/DropDownActions";
+import DeleteItem from "@/components/DeleteItem";
+import { deleteAppointmentAction } from "./actions/createAppointmentAction";
 
 export const appointmentTableColumns: ColumnDef<Appointment>[] = [
   {
@@ -54,5 +57,20 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
   {
     id: "Appointment Actions",
     header: "Action",
+    cell: ({ row: { original } }) => {
+      return (
+        <DropDownActions
+          items={[
+            <DeleteItem
+              key={`delete${original.pkid}`}
+              name={original.full_name}
+              action={() =>
+                deleteAppointmentAction(undefined, original.pkid.toString())
+              }
+            />,
+          ]}
+        />
+      );
+    },
   },
 ];

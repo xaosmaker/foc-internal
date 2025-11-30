@@ -38,3 +38,19 @@ export async function baseGetRequest({ url }: { url: string }) {
     },
   });
 }
+
+export async function baseDeleteRequest({ url }: { url: string }) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("Invalid Credential from Session");
+  }
+
+  return await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      cookie: session.user.access,
+    },
+  });
+}
