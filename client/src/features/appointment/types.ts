@@ -20,3 +20,11 @@ export interface AppointmentISO extends AppointmentBase {
 export interface Appointment extends AppointmentBase {
   appointment_date: DateLocalStr;
 }
+
+export interface AppointmentPost
+  extends Pick<
+    AppointmentBase,
+    "full_name" | "telephone" | "address" | "location"
+  > {
+  appointment_date: DateISOStr;
+}

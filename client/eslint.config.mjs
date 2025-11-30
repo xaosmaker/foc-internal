@@ -6,6 +6,22 @@ import boundaries from "eslint-plugin-boundaries";
 import conf from "./eslint.boundaries.json" with { type: "json" };
 
 const eslintConfig = defineConfig([
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          // args: "all",
+          argsIgnorePattern: "^_",
+          // caughtErrors: "all",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          //ignoreRestSiblings: true,
+        },
+      ],
+    },
+  },
   ...nextVitals,
   ...nextTs,
   // Override default ignores of eslint-config-next.

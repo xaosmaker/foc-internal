@@ -11,7 +11,6 @@ export const appointmentSchema = z.object({
   address: z.string().trim().min(3, "Enter the address here"),
   date: z.iso.date({ error: "Invalid Date" }).trim(),
   time: z.iso.time({ error: "Invalid time" }),
-  status: z.number(),
   location: z.number(),
 });
 

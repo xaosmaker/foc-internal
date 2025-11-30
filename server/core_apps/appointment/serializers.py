@@ -8,13 +8,9 @@ class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = "__all__"
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "status"]
 
     def create(self, validated_data):
-        # WARN: when i fix the auth i have to set the user to the user that validtates
-        # the request
         user = self.context["request"].user
-
-        appointment = Appointment.objects.create(**validated_data, user=user)
-
+        appointment = Appointment.objects.create(**validated_data, user=user, status=10)
         return appointment
