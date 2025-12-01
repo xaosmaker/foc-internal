@@ -35,7 +35,10 @@ class StatusCodes(models.IntegerChoices):
     CANCELLED = (100, "Cancelled")  # red
 
     INSPECTION_PENDING = (10, "Inspection Pending")  # yellow
-    INSPECTION_DONE = (11, "Inspection Done")  # brown
+    INSPECTION_DONE = (
+        11,
+        "Inspection Done",
+    )  # brown TODO: this can be deleted is unused
     INSPECTION_REVIEW = (12, "Inspection Review")  # gray
 
     WORK_SCHEDULED = (20, "Work Scheduled")  # purple

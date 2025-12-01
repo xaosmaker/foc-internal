@@ -2,6 +2,7 @@
 
 import {
   baseDeleteRequest,
+  basePatchRequest,
   basePostRequest,
   basePutRequest,
 } from "@/lib/baseRequests";
@@ -60,4 +61,24 @@ export async function editAppointmentAction(
   if (res && res.status === 201) {
     return revalidatePath(`/appointment/${data.id}/edit`);
   }
+}
+
+export async function FinishAppointmentAction(
+  _previousState: undefined,
+  id: string,
+) {
+  let res;
+  try {
+    res = await basePatchRequest({
+      url: `${BASE_URL}/api/appointments/${id}/`,
+    });
+  } catch (e) {
+    console.log("finish appointment: ", e);
+    return;
+  }
+  if (res) {
+    const data = await res.json();
+    redirect(`/inspections/${data.id}/edit`);
+  }
+  redirect("/appointment");
 }

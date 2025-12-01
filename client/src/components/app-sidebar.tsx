@@ -11,7 +11,12 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ClipboardClock, ClipboardPlus, Home } from "lucide-react";
+import {
+  ClipboardClock,
+  ClipboardPlus,
+  ClipboardSignature,
+  Home,
+} from "lucide-react";
 import Link from "next/link";
 
 const appointmentLinks = [
@@ -20,6 +25,12 @@ const appointmentLinks = [
     title: "Create Appointment",
     url: "/appointment/create",
     icon: ClipboardPlus,
+  },
+
+  {
+    title: "Inspections",
+    url: "/inspections",
+    icon: ClipboardSignature,
   },
 ];
 

@@ -40,4 +40,5 @@ urlpatterns = [
     path("api/", include("core_apps.appointment.urls")),
     path("api/", include("core_apps.common.urls")),
     path("api/", include("core_apps.user.urls")),
+    path("api/", include("core_apps.inspection.urls")),
 ]

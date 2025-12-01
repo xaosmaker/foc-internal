@@ -5,11 +5,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2 } from "lucide-react";
+import { ClipboardCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-export default function DeleteItem({
+export default function FinishJob({
   name,
   action,
 }: {
@@ -18,24 +18,21 @@ export default function DeleteItem({
 }) {
   return (
     <Dialog>
-      <DialogTrigger
-        className="flex items-center gap-2 px-2 py-2 text-nowrap"
-        asChild
-      >
+      <DialogTrigger className="flex items-center gap-2 text-nowrap" asChild>
         <Button className="hover: w-full bg-inherit" variant="secondary">
-          <Trash2 /> Delete
+          <ClipboardCheck /> Finish
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle className="text-red-600">
+        <DialogTitle className="text-green-600">
           Delete Item &apos;{name}&apos;
         </DialogTitle>
-        <DialogDescription className="text-red-500">
-          Are you sure you want to delete this item? This action is ireversible!
+        <DialogDescription className="text-green-500">
+          Are you sure you want to finish this job? This action is ireversible!
         </DialogDescription>
         <form action={action} className="p flex justify-between">
           <Button type="submit" variant="destructive">
-            Delete
+            Finish
           </Button>
           <Button asChild>
             <DialogClose>Cancel</DialogClose>

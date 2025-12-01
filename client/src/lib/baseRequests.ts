@@ -76,3 +76,19 @@ export async function basePutRequest({
     body: JSON.stringify(data),
   });
 }
+
+export async function basePatchRequest({ url }: { url: string }) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("Invalid Credential from Session");
+  }
+
+  return await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      cookie: session.user.access,
+    },
+  });
+}

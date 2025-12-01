@@ -3,8 +3,6 @@ from core_apps.common.models import BaseAppointmentInspectionModel, BaseModel
 from django.contrib.auth import get_user_model
 from django.db import models
 
-# Create your models here.
-
 
 class DataType(models.IntegerChoices):
     IMAGE = (0, "Images")
@@ -16,9 +14,7 @@ class DataType(models.IntegerChoices):
 
 
 class Inspection(BaseAppointmentInspectionModel):
-    by_appointment = models.OneToOneField(
-        Appointment, on_delete=models.CASCADE, null=True
-    )
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, null=True)
 
     verify_by = models.ForeignKey(
         get_user_model(),
@@ -28,7 +24,7 @@ class Inspection(BaseAppointmentInspectionModel):
         related_name="verify_by",
     )
     details = models.TextField(blank=True, null=True)
-    inspection_start = models.DateTimeField(blank=False, null=False)
+    inspection_start = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     inspection_finish = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):

@@ -1,25 +1,19 @@
 "use client";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Appointment } from "./types";
 import StatusCodeColors, { StatusColors } from "@/components/StatusCodeColors";
 import DropDownActions from "@/components/DropDownActions";
-import DeleteItem from "@/components/DeleteItem";
-import {
-  deleteAppointmentAction,
-  FinishAppointmentAction,
-} from "./actions/createAppointmentAction";
 import Link from "next/link";
 import { CLIENT_URL } from "@/lib/baseUrl";
 import { Pencil } from "lucide-react";
-import FinishJob from "@/components/FinishJob";
+import { Inspection } from "./types/inpectionsTypes";
 
-export const appointmentTableColumns: ColumnDef<Appointment>[] = [
+export const inspectionTableColumns: ColumnDef<Inspection>[] = [
   {
     accessorKey: "full_name",
     header: "Full Name",
     cell: ({ row: { original } }) => {
       return (
-        <Link href={`/appointment/${original.id}/`}>{original.full_name}</Link>
+        <Link href={`/inspections/${original.id}/`}>{original.full_name}</Link>
       );
     },
   },
@@ -50,13 +44,6 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     },
   },
   {
-    accessorKey: "appointment_date",
-    header: "Appointment Date",
-    cell: ({ row: { original } }) => {
-      return original.appointment_date;
-    },
-  },
-  {
     accessorKey: "location",
     header: "Location",
     cell: ({ row, table }) => {
@@ -70,29 +57,14 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     id: "Appointment Actions",
     header: "Action",
     cell: ({ row: { original } }) => {
-      if (original.status === 50) {
-        return;
-      }
+      console.log(original.id);
+
       return (
         <DropDownActions
           items={[
-            <FinishJob
-              key={`finishAppointment${original.id}`}
-              name={original.full_name}
-              action={() =>
-                FinishAppointmentAction(undefined, original.id.toString())
-              }
-            />,
-            <DeleteItem
-              key={`deleteAppointment${original.id}`}
-              name={original.full_name}
-              action={() =>
-                deleteAppointmentAction(undefined, original.id.toString())
-              }
-            />,
             <Link
-              key={`editAppointment${original.id}`}
-              href={`${CLIENT_URL}/appointment/${original.id}/edit`}
+              key={`edit${original.id}`}
+              href={`${CLIENT_URL}/inspections/${original.id}/edit`}
               className="flex justify-center gap-2 text-lg"
             >
               <Pencil />
