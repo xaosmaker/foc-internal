@@ -34,6 +34,7 @@ LOCAL_APPS = [
     "core_apps.user",
     "core_apps.common",
     "core_apps.appointment",
+    "core_apps.inspection",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",

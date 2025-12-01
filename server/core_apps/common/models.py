@@ -1,4 +1,6 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import choices
 
 
 # WARN: on change of status code please update the front End
@@ -63,3 +65,18 @@ class Location(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class BaseAppointmentInspectionModel(BaseModel):
+    full_name = models.CharField(max_length=255, blank=False, null=False)
+    telephone = models.CharField(max_length=20, blank=False, null=False)
+    address = models.CharField(max_length=255, blank=False, null=False)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    status = models.IntegerField(choices=StatusCodes)
+    # the user create The model
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    objects = models.Manager()
+
+    class Meta:
+        abstract = True
