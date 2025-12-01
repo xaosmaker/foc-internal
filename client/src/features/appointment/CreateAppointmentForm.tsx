@@ -1,5 +1,6 @@
 "use client";
 
+import { formatISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import FormField from "@/components/FormField";
@@ -22,14 +23,24 @@ import {
 } from "@/components/ui/select";
 import { z } from "zod/v4";
 import { useActionState, useTransition } from "react";
-import { createAppointmentAction } from "./actions/createAppointmentAction";
-import { AppointmentPost } from "./types";
+import {
+  createAppointmentAction,
+  editAppointmentAction,
+} from "./actions/createAppointmentAction";
+import { Appointment, AppointmentPost } from "./types";
 
 export default function CreateAppointmentForm({
   location,
+  editData,
 }: {
   location: Location[];
+  editData?: Appointment;
 }) {
+  let time;
+  if (editData) {
+    time = formatISO(new Date(editData?.appointment_date));
+  }
+  console.log(time);
   const {
     register,
     handleSubmit,
@@ -37,17 +48,20 @@ export default function CreateAppointmentForm({
     formState: { errors },
   } = useForm<AppointmentSchema>({
     defaultValues: {
-      location: 1,
-      time: "00:00",
-      date: "2025-11-30",
-      address: "some",
-      telephone: "1234567890",
-      full_name: "name",
+      location: editData?.location || 1,
+      time: time?.slice(11, 16) || "00:00",
+      date: time?.slice(0, 10) || new Date().toISOString().slice(0, 10),
+      address: editData?.address || "",
+      telephone: editData?.telephone || "",
+      full_name: editData?.full_name || "",
     },
     resolver: zodResolver(appointmentSchema),
     mode: "onChange",
   });
-  const [_, action] = useActionState(createAppointmentAction, undefined);
+  const [_, action] = useActionState(
+    editData ? editAppointmentAction : createAppointmentAction,
+    undefined,
+  );
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = (data: AppointmentSchema) => {
@@ -70,6 +84,9 @@ export default function CreateAppointmentForm({
 
       appointment_date: appointment_date,
     };
+    if (editData) {
+      appointmentData.pkid = editData.pkid;
+    }
     startTransition(() => {
       action(appointmentData);
     });
@@ -78,10 +95,13 @@ export default function CreateAppointmentForm({
   return (
     <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
-        <CardTitle>Create Appointment</CardTitle>
+        <CardTitle>
+          {editData ? "Edit" : "Create"} Appointment{"  "}
+          {editData && `'${editData?.full_name}'`}
+        </CardTitle>
         <CardDescription>
-          Create an appointment for inspection <br /> The fields with (*) are
-          required
+          {editData ? "Edit" : "Create"} an appointment for inspection <br />{" "}
+          The fields with (*) are required
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -171,7 +191,7 @@ export default function CreateAppointmentForm({
           />
 
           <Button disabled={isPending} type="submit" className="mt-4 w-full">
-            Create Appointment
+            {editData ? "Edit" : "Create"} Appointment
           </Button>
 
           {/* INFO: here is the code for the summary error later will be api errors */}

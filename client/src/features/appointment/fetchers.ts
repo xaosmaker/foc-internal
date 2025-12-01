@@ -16,3 +16,20 @@ export async function getAppointments() {
     return [];
   }
 }
+
+export async function getAppointmentById(id: string) {
+  try {
+    const res = await baseGetRequest({
+      url: `${BASE_URL}/api/appointments/${id}/`,
+    });
+    const data: AppointmentISO = await res.json();
+    const localTimeData: Appointment = data;
+    localTimeData.appointment_date = new Date(
+      data.appointment_date,
+    ).toLocaleString();
+    return localTimeData;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+}

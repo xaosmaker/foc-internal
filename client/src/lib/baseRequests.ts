@@ -1,11 +1,11 @@
 import { auth } from "@/lib/auth";
 
-export async function basePostRequest<T>({
+export async function basePostRequest({
   url,
   data,
 }: {
   url: string;
-  data: T;
+  data: unknown;
 }) {
   const session = await auth();
 
@@ -52,5 +52,27 @@ export async function baseDeleteRequest({ url }: { url: string }) {
       "content-type": "application/json",
       cookie: session.user.access,
     },
+  });
+}
+export async function basePutRequest({
+  url,
+  data,
+}: {
+  url: string;
+  data: unknown;
+}) {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("Invalid Credential from Session");
+  }
+
+  return await fetch(url, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      cookie: session.user.access,
+    },
+    body: JSON.stringify(data),
   });
 }

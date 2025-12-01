@@ -1,8 +1,8 @@
 import { DateISOStr, DateLocalStr } from "@/types/sharedTypes";
 
 type AppointmentBase = {
-  pkid: string;
-  id: number;
+  pkid: number;
+  id: string;
   created_at: Date;
   edited_at: Date;
   full_name: string;
@@ -26,5 +26,6 @@ export interface AppointmentPost
     AppointmentBase,
     "full_name" | "telephone" | "address" | "location"
   > {
+  pkid?: number;
   appointment_date: DateISOStr;
 }

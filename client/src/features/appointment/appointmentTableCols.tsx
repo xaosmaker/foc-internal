@@ -5,11 +5,21 @@ import StatusCodeColors, { StatusColors } from "@/components/StatusCodeColors";
 import DropDownActions from "@/components/DropDownActions";
 import DeleteItem from "@/components/DeleteItem";
 import { deleteAppointmentAction } from "./actions/createAppointmentAction";
+import Link from "next/link";
+import { CLIENT_URL } from "@/lib/baseUrl";
+import { Pencil } from "lucide-react";
 
 export const appointmentTableColumns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "full_name",
     header: "Full Name",
+    cell: ({ row: { original } }) => {
+      return (
+        <Link href={`/appointment/${original.pkid}/`}>
+          {original.full_name}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "address",
@@ -68,6 +78,14 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
                 deleteAppointmentAction(undefined, original.pkid.toString())
               }
             />,
+            <Link
+              key={`edit${original.pkid}`}
+              href={`${CLIENT_URL}/appointment/${original.pkid}/edit`}
+              className="flex gap-2 text-lg"
+            >
+              <Pencil />
+              Edit
+            </Link>,
           ]}
         />
       );
