@@ -85,7 +85,7 @@ export default function CreateAppointmentForm({
       appointment_date: appointment_date,
     };
     if (editData) {
-      appointmentData.pkid = editData.pkid;
+      appointmentData.id = editData.id;
     }
     startTransition(() => {
       action(appointmentData);
@@ -180,7 +180,7 @@ export default function CreateAppointmentForm({
                   </SelectTrigger>
                   <SelectContent>
                     {location.map((item) => (
-                      <SelectItem key={item.pkid} value={item.pkid.toString()}>
+                      <SelectItem key={item.id} value={item.id.toString()}>
                         {item.name}
                       </SelectItem>
                     ))}

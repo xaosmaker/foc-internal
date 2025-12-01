@@ -50,7 +50,7 @@ export default async function AppointmentIdPage({
         <div className="flex items-center justify-between">
           <Button>finish</Button>
           <Link
-            href={`${CLIENT_URL}/appointment/${appointment.pkid}/edit`}
+            href={`${CLIENT_URL}/appointment/${appointment.id}/edit`}
             className="flex gap-2"
           >
             <Pencil />
@@ -59,9 +59,13 @@ export default async function AppointmentIdPage({
 
           <DeleteItem
             name={appointment.full_name}
-            action={() =>
-              deleteAppointmentAction(undefined, appointment.pkid.toString())
-            }
+            action={async () => {
+              "use server";
+              return deleteAppointmentAction(
+                undefined,
+                appointment.id.toString(),
+              );
+            }}
           />
         </div>
       </div>

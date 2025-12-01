@@ -37,11 +37,11 @@ export async function deleteAppointmentAction(
     await baseDeleteRequest({
       url: `${BASE_URL}/api/appointments/${id}/`,
     });
-
-    revalidatePath("/appointment");
   } catch (e) {
     console.log("delete appointment: ", e);
+    return;
   }
+  redirect("/appointment");
 }
 export async function editAppointmentAction(
   _previousState: undefined,
@@ -50,7 +50,7 @@ export async function editAppointmentAction(
   let res;
   try {
     res = await basePutRequest({
-      url: `${BASE_URL}/api/appointments/${data.pkid}/`,
+      url: `${BASE_URL}/api/appointments/${data.id}/`,
       data: data,
     });
   } catch (e) {
@@ -58,6 +58,6 @@ export async function editAppointmentAction(
   }
 
   if (res && res.status === 201) {
-    return revalidatePath(`/appointment/${data.pkid}/edit`);
+    return revalidatePath(`/appointment/${data.id}/edit`);
   }
 }

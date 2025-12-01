@@ -1,6 +1,5 @@
 export type Location = {
-  pkid: number;
-  id: string;
+  id: number;
   created_at: DateISOStr;
   edited_at: DateISOStr;
   name: string;

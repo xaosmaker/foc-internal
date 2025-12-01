@@ -15,9 +15,7 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     header: "Full Name",
     cell: ({ row: { original } }) => {
       return (
-        <Link href={`/appointment/${original.pkid}/`}>
-          {original.full_name}
-        </Link>
+        <Link href={`/appointment/${original.id}/`}>{original.full_name}</Link>
       );
     },
   },
@@ -59,7 +57,7 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     header: "Location",
     cell: ({ row, table }) => {
       const location = table.options.meta?.locations?.find(
-        (item) => item.pkid === row.original.location,
+        (item) => item.id === row.original.location,
       );
       return location?.name;
     },
@@ -72,15 +70,15 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
         <DropDownActions
           items={[
             <DeleteItem
-              key={`delete${original.pkid}`}
+              key={`delete${original.id}`}
               name={original.full_name}
               action={() =>
-                deleteAppointmentAction(undefined, original.pkid.toString())
+                deleteAppointmentAction(undefined, original.id.toString())
               }
             />,
             <Link
-              key={`edit${original.pkid}`}
-              href={`${CLIENT_URL}/appointment/${original.pkid}/edit`}
+              key={`edit${original.id}`}
+              href={`${CLIENT_URL}/appointment/${original.id}/edit`}
               className="flex gap-2 text-lg"
             >
               <Pencil />

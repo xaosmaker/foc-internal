@@ -2,13 +2,10 @@
 Base user model.
 """
 
-import uuid
-
+from core_apps.user.manager import UserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-from core_apps.user.manager import UserManager
 
 # TODO: need test admin user
 
@@ -18,8 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     Base user class
     """
 
-    pkid = models.BigAutoField(primary_key=True, unique=True, editable=False)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    id = models.BigAutoField(primary_key=True, unique=True, editable=False)
     email = models.EmailField(
         verbose_name=_("Email Address"),
         unique=True,
