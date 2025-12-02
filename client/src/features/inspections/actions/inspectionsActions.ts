@@ -3,6 +3,7 @@ import { BASE_URL } from "@/lib/baseUrl";
 import { InspectionSchema } from "../inspectionSchema";
 import { baseDeleteRequest, basePutRequest } from "@/lib/baseRequests";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 
 export async function editInspectionAction(
   _previousState: undefined,
@@ -15,12 +16,12 @@ export async function editInspectionAction(
       data: data,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
-  // if (res && res.status === 201) {
-  //   return revalidatePath(`/inspections/${data.id}/edit`);
-  // }
+  if (res && res.status === 200) {
+    return redirect(`/inspections/${data.id}`);
+  }
   return undefined;
 }
 
@@ -33,8 +34,34 @@ export async function deleteInspectionAction(
       url: `${BASE_URL}/api/inspections/${id}/`,
     });
   } catch (e) {
-    console.log("delete inspection Error: ", e);
+    console.error("delete inspection Error: ", e);
     return;
   }
   redirect("/inspections");
+}
+
+export async function createInspectionImagesAction(
+  _previousState: undefined,
+  dataForm: FormData,
+) {
+  const session = await auth();
+  if (!session) {
+    throw new Error("can't upload images no auth user");
+  }
+  let res;
+  try {
+    res = await fetch(`${BASE_URL}/api/inspectionsFilesUpload/`, {
+      method: "POST",
+      headers: {
+        cookie: session?.user.access,
+      },
+      body: dataForm,
+    });
+  } catch (e) {
+    console.error("uploald Image error: ", e);
+  }
+  if (res?.status === 204) {
+    redirect(`/inspections/${dataForm.get("id")}`);
+  }
+  return undefined;
 }

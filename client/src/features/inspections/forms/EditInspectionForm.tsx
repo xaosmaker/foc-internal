@@ -28,7 +28,7 @@ export default function EditInspectionForm({
   editData,
 }: {
   location: Location[];
-  editData: InspectionSchema;
+  editData: InspectionSchema | undefined;
 }) {
   const {
     register,
@@ -37,11 +37,11 @@ export default function EditInspectionForm({
     formState: { errors },
   } = useForm<InspectionSchema>({
     defaultValues: {
-      id: editData.id,
-      address: editData.address,
-      telephone: editData.telephone,
-      full_name: editData.full_name,
-      location: editData.location,
+      id: editData?.id,
+      address: editData?.address,
+      telephone: editData?.telephone,
+      full_name: editData?.full_name,
+      location: editData?.location,
     },
     resolver: zodResolver(inspectionSchema),
     mode: "onChange",

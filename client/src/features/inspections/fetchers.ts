@@ -1,5 +1,6 @@
 import { baseGetRequest } from "@/lib/baseRequests";
 import { BASE_URL } from "@/lib/baseUrl";
+import { Inspection } from "./types/inpectionsTypes";
 
 export async function getInspections() {
   try {
@@ -7,7 +8,7 @@ export async function getInspections() {
     const data = await res.json();
     return data;
   } catch (e) {
-    console.log("get inspections Error: ", e);
+    console.error("get inspections Error: ", e);
   }
 }
 
@@ -16,9 +17,10 @@ export async function getInspectionById(id: string) {
     const res = await baseGetRequest({
       url: `${BASE_URL}/api/inspections/${id}/`,
     });
-    const data = await res.json();
+    const data: Inspection = await res.json();
     return data;
   } catch (e) {
-    console.log("get inspections Error: ", e);
+    console.error("get inspections Error: ", e);
+    return undefined;
   }
 }

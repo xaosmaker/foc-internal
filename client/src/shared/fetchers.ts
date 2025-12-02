@@ -22,7 +22,7 @@ export async function getStatusCodes() {
     const data: StatusCodes = await res.json();
     return data;
   } catch (e) {
-    console.log("getStatusCodes Error: ", e);
+    console.error("getStatusCodes Error: ", e);
     return [];
   }
 }
@@ -33,7 +33,7 @@ export async function getLocations() {
     const data: Location[] = await res.json();
     return data;
   } catch (e) {
-    console.log("getLocations Error: ", e);
+    console.error("getLocations Error: ", e);
 
     return [];
   }

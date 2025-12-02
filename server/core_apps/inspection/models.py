@@ -8,6 +8,7 @@ class DataType(models.IntegerChoices):
     IMAGE = (0, "Images")
     VIDEO = (1, "Video")
     TEXT = (3, "Text")
+    FIND = (4, "Find")
 
     class Meta:
         abstract = True
@@ -33,8 +34,11 @@ class Inspection(BaseAppointmentInspectionModel):
 
 class InspectionFilesData(BaseModel):
     data_type = models.IntegerField(choices=DataType)
-    data = models.CharField(max_length=255)
-    inspection = models.ForeignKey(Inspection, on_delete=models.CASCADE)
+    extension = models.CharField()
+    file_data = models.CharField()
+    inspection = models.ForeignKey(
+        Inspection, on_delete=models.CASCADE, related_name="inspectionsFilesData_set"
+    )
 
     def __str__(self):
-        return f"{self.data}, {self.data_type}, {self.inspection.full_name}"
+        return f"{self.file_data}, {self.data_type}, {self.inspection.full_name}"

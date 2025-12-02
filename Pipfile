@@ -9,6 +9,7 @@ djangorestframework = "*"
 drf-spectacular = "*"
 djangorestframework-simplejwt = "*"
 argon2-cffi = "*"
+pillow = "*"
 django-cors-headers = "*"
 
 [dev-packages]

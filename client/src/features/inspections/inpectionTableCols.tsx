@@ -3,7 +3,6 @@ import type { ColumnDef } from "@tanstack/react-table";
 import StatusCodeColors, { StatusColors } from "@/components/StatusCodeColors";
 import DropDownActions from "@/components/DropDownActions";
 import Link from "next/link";
-import { CLIENT_URL } from "@/lib/baseUrl";
 import { Pencil } from "lucide-react";
 import { Inspection } from "./types/inpectionsTypes";
 
@@ -57,14 +56,12 @@ export const inspectionTableColumns: ColumnDef<Inspection>[] = [
     id: "Appointment Actions",
     header: "Action",
     cell: ({ row: { original } }) => {
-      console.log(original.id);
-
       return (
         <DropDownActions
           items={[
             <Link
               key={`edit${original.id}`}
-              href={`${CLIENT_URL}/inspections/${original.id}/edit`}
+              href={`/inspections/${original.id}/edit`}
               className="flex justify-center gap-2 text-lg"
             >
               <Pencil />

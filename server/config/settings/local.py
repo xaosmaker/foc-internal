@@ -8,6 +8,10 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["foc-internal-server", "localhost"]
+ALLOWED_HOSTS = ["localhost2", "localhost", "foc-internal-server"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://localhost2",
+    "http://localhost:8080",
+]
 
 COOKIE_SECURE = False

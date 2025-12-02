@@ -13,6 +13,7 @@ interface InspectionBase {
   details: string | undefined;
   appointment: number;
   verify_by: number;
+  images?: InspectionImages[];
 }
 
 export interface InspectionGet extends InspectionBase {
@@ -23,4 +24,14 @@ export interface InspectionGet extends InspectionBase {
 export interface Inspection extends InspectionBase {
   inspection_start: DateLocalStr;
   inspection_finish: DateLocalStr;
+}
+
+export interface InspectionImages {
+  id: number;
+  created_at: DateISOStr;
+  edited_at: DateISOStr;
+  data_type: number;
+  extension: string;
+  file_data: string;
+  inspection: number;
 }
