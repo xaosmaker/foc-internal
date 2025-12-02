@@ -1,9 +1,12 @@
 import DeleteItem from "@/components/DeleteItem";
+import FinishJob from "@/components/FinishJob";
 import StatusCodeColors, { StatusColors } from "@/components/StatusCodeColors";
 import { Button } from "@/components/ui/button";
-import { deleteAppointmentAction } from "@/features/appointment/actions/createAppointmentAction";
+import {
+  deleteAppointmentAction,
+  FinishAppointmentAction,
+} from "@/features/appointment/actions/createAppointmentAction";
 import { getAppointmentById } from "@/features/appointment/fetchers";
-import { CLIENT_URL } from "@/lib/baseUrl";
 import { getStatusCodes } from "@/shared/fetchers";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
@@ -47,27 +50,39 @@ export default async function AppointmentIdPage({
           <p>{appointment.location}</p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <Button>finish</Button>
-          <Link
-            href={`${CLIENT_URL}/appointment/${appointment.id}/edit`}
-            className="flex gap-2"
-          >
-            <Pencil />
-            Edit
-          </Link>
-
-          <DeleteItem
-            name={appointment.full_name}
-            action={async () => {
-              "use server";
-              return deleteAppointmentAction(
-                undefined,
-                appointment.id.toString(),
-              );
-            }}
-          />
-        </div>
+        {appointment.status === 10 && (
+          <div className="flex w-fit items-center justify-between">
+            <FinishJob
+              name={appointment.full_name}
+              action={async () => {
+                "use server";
+                return FinishAppointmentAction(
+                  undefined,
+                  appointment.id.toString(),
+                );
+              }}
+            />
+            <Link
+              href={`/appointment/${appointment.id}/edit`}
+              className="flex w-full gap-2"
+            >
+              <Button className="hover:bg-secondary w-full bg-inherit text-inherit">
+                <Pencil />
+                Edit
+              </Button>
+            </Link>
+            <DeleteItem
+              name={appointment.full_name}
+              action={async () => {
+                "use server";
+                return deleteAppointmentAction(
+                  undefined,
+                  appointment.id.toString(),
+                );
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

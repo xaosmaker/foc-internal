@@ -12,7 +12,7 @@ export async function getAppointments() {
     });
     return localTimeData;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return [];
   }
 }
@@ -29,7 +29,7 @@ export async function getAppointmentById(id: string) {
     ).toLocaleString();
     return localTimeData;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return undefined;
   }
 }

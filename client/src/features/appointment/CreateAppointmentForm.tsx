@@ -40,7 +40,6 @@ export default function CreateAppointmentForm({
   if (editData) {
     time = formatISO(new Date(editData?.appointment_date));
   }
-  console.log(time);
   const {
     register,
     handleSubmit,

@@ -9,7 +9,6 @@ import {
 import { BASE_URL } from "@/lib/baseUrl";
 import { AppointmentPost } from "../types";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export async function createAppointmentAction(
   _previousState: undefined,
@@ -22,7 +21,7 @@ export async function createAppointmentAction(
       data: formData,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
   if (res && res.status === 201) {
@@ -55,11 +54,11 @@ export async function editAppointmentAction(
       data: data,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
-  if (res && res.status === 201) {
-    return revalidatePath(`/appointment/${data.id}/edit`);
+  if (res && res.status === 200) {
+    return redirect(`/appointment/${data.id}`);
   }
 }
 
@@ -73,12 +72,12 @@ export async function FinishAppointmentAction(
       url: `${BASE_URL}/api/appointments/${id}/`,
     });
   } catch (e) {
-    console.log("finish appointment: ", e);
+    console.error("finish appointment: ", e);
     return;
   }
-  if (res) {
+  if (res.status === 201) {
     const data = await res.json();
-    redirect(`/inspections/${data.id}/edit`);
+    return redirect(`/inspections/${data.id}/edit`);
   }
   redirect("/appointment");
 }

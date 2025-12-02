@@ -9,7 +9,6 @@ import {
   FinishAppointmentAction,
 } from "./actions/createAppointmentAction";
 import Link from "next/link";
-import { CLIENT_URL } from "@/lib/baseUrl";
 import { Pencil } from "lucide-react";
 import FinishJob from "@/components/FinishJob";
 
@@ -92,7 +91,7 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
             />,
             <Link
               key={`editAppointment${original.id}`}
-              href={`${CLIENT_URL}/appointment/${original.id}/edit`}
+              href={`/appointment/${original.id}/edit`}
               className="flex justify-center gap-2 text-lg"
             >
               <Pencil />
