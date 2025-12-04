@@ -1,5 +1,10 @@
+import FinishJob from "@/components/FinishJob";
+import { Button } from "@/components/ui/button";
+import { finishInspectionAction } from "@/features/inspections/actions/inspectionsActions";
 import { getInspectionById } from "@/features/inspections/fetchers";
 import { FileUploadDemo } from "@/features/inspections/FileUploadDemo";
+import { Pencil } from "lucide-react";
+import Link from "next/link";
 export default async function InspectonsIdPage({
   params,
 }: {
@@ -34,29 +39,47 @@ export default async function InspectonsIdPage({
           {inspection?.telephone}
         </p>
       </div>
-      <FileUploadDemo inspectionId={inspectionsId} />
-      <div className="grid grid-cols-2">
+      {inspection?.status === 10 && (
+        <FileUploadDemo inspectionId={inspectionsId} />
+      )}
+      <div className="grid max-w-4xl grid-cols-2 gap-2">
         {inspection?.images?.map((item) => {
-          const url = item.file_data.replace(
-            "foc-internal-server:8000",
-            "localhost:8080",
-          );
           if (item.data_type === 0) {
             return (
               <div key={item.id} className="relative h-full w-full">
-                <img src={url} className="h-full w-full object-cover" />
+                <img
+                  src={item.file_data}
+                  className="h-full w-full object-cover"
+                />
               </div>
             );
           }
           if (item.data_type === 1) {
             return (
               <video controls key={item.id}>
-                <source src={url} type={`video/${item.extension}`} />
+                <source src={item.file_data} type={`video/${item.extension}`} />
               </video>
             );
           }
         })}
       </div>
+      {inspection?.status === 10 && (
+        <div className="flex w-fit items-center justify-between">
+          <FinishJob
+            name={inspection?.full_name || ""}
+            action={async () => {
+              "use server";
+              return finishInspectionAction(undefined, inspection?.id || -1);
+            }}
+          />
+          <Link href={`/inspections/${inspectionsId}/edit`}>
+            <Button className="hover:bg-secondary w-full bg-inherit text-inherit">
+              <Pencil />
+              Edit
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

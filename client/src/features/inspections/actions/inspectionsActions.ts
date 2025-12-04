@@ -1,9 +1,14 @@
 "use server";
 import { BASE_URL } from "@/lib/baseUrl";
 import { InspectionSchema } from "../inspectionSchema";
-import { baseDeleteRequest, basePutRequest } from "@/lib/baseRequests";
+import {
+  baseDeleteRequest,
+  basePatchRequest,
+  basePutRequest,
+} from "@/lib/baseRequests";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 export async function editInspectionAction(
   _previousState: undefined,
@@ -64,4 +69,23 @@ export async function createInspectionImagesAction(
     redirect(`/inspections/${dataForm.get("id")}`);
   }
   return undefined;
+}
+
+export async function finishInspectionAction(
+  _prevState: undefined,
+  id: number,
+) {
+  let res;
+  try {
+    res = await basePatchRequest({
+      url: `${BASE_URL}/api/inspections/${id}/`,
+    });
+  } catch (e) {
+    console.error("Finish inspection error: ", e);
+  }
+  console.log(res);
+  if (res && res.status === 204) {
+    return redirect(`/inspections`);
+    redirect(`/inspections`);
+  }
 }

@@ -1,12 +1,16 @@
 import os
 
+from core_apps.common.models import StatusCodes
 from core_apps.inspection.models import DataType, Inspection, InspectionFilesData
 from core_apps.inspection.serializers import (
     InspectionFilesDataSerializer,
     InspectionSerializer,
 )
+from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.forms.forms import datetime
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -19,6 +23,17 @@ class InspectionViews(ModelViewSet):
     serializer_class = InspectionSerializer
     permission_classes = [IsAuthenticated]
 
+    def partial_update(self, request, *args, **kwargs):
+        id = kwargs.get("pk")
+
+        instance = Inspection.objects.get(id=id)
+        print(instance, 124)
+        instance.status = StatusCodes.INSPECTION_REVIEW
+        instance.inspection_finish = timezone.now()
+        instance.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class InspectionFilesDataViews(ModelViewSet):
     queryset = InspectionFilesData.objects.all()
@@ -27,11 +42,15 @@ class InspectionFilesDataViews(ModelViewSet):
     parser_classes = [MultiPartParser]
 
     def create(self, request, *args, **kwargs):
+        domain = getattr(settings, "DOMAIN_NAME", None)
+        if not domain:
+            raise ValueError("Domain name is empty")
+
         try:
             images = request.FILES.getlist("images")
             id = request.data.get("id")
 
-            addr = f"http://{request.get_host()}/media"
+            addr = f"{domain}/media"
             inspection = Inspection.objects.get(id=id)
 
             for img in images:

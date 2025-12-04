@@ -15,3 +15,4 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 COOKIE_SECURE = False
+DOMAIN_NAME = "http://localhost:8080"
