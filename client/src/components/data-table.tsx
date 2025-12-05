@@ -18,21 +18,15 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { StatusCodes } from "@/shared/fetchers";
-import { Location } from "@/types/sharedTypes";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  statusCodes?: StatusCodes;
-  locations?: Location[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  locations = [],
-  statusCodes = [],
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState<string>("");
   const table = useReactTable({
@@ -44,10 +38,6 @@ export function DataTable<TData, TValue>({
     globalFilterFn: "includesString",
     state: {
       globalFilter,
-    },
-    meta: {
-      statusCodes,
-      locations,
     },
   });
 

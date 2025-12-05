@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { Pencil } from "lucide-react";
 import FinishJob from "@/components/FinishJob";
+import { APP_STATUS_CODES } from "@/shared/statusCodes";
 
 export const appointmentTableColumns: ColumnDef<Appointment>[] = [
   {
@@ -33,19 +34,12 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row, table }) => {
+    cell: ({ row }) => {
       const code = row.original.status;
 
-      const statusCode = table.options.meta?.statusCodes?.find(
-        (data) => data.value === code,
-      );
-      const variant = statusCode!.label.replace(" ", "_") as StatusColors;
+      const variant = code.replace(" ", "_") as StatusColors;
 
-      return (
-        <StatusCodeColors variant={variant}>
-          {statusCode!.label}
-        </StatusCodeColors>
-      );
+      return <StatusCodeColors variant={variant}>{code}</StatusCodeColors>;
     },
   },
   {
@@ -58,18 +52,12 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "location",
     header: "Location",
-    cell: ({ row, table }) => {
-      const location = table.options.meta?.locations?.find(
-        (item) => item.id === row.original.location,
-      );
-      return location?.name;
-    },
   },
   {
     id: "Appointment Actions",
     header: "Action",
     cell: ({ row: { original } }) => {
-      if (original.status === 50) {
+      if (original.status === APP_STATUS_CODES[50]) {
         return;
       }
       return (

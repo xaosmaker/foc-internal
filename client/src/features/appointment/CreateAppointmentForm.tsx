@@ -47,7 +47,7 @@ export default function CreateAppointmentForm({
     formState: { errors },
   } = useForm<AppointmentSchema>({
     defaultValues: {
-      location: editData?.location || 1,
+      location: editData?.locationId || 1,
       time: time?.slice(11, 16) || "00:00",
       date: time?.slice(0, 10) || new Date().toISOString().slice(0, 10),
       address: editData?.address || "",

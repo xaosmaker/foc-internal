@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { finishInspectionAction } from "@/features/inspections/actions/inspectionsActions";
 import { getInspectionById } from "@/features/inspections/fetchers";
 import { FileUploadDemo } from "@/features/inspections/FileUploadDemo";
+import { APP_STATUS_CODES } from "@/shared/statusCodes";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 export default async function InspectonsIdPage({
@@ -39,7 +40,7 @@ export default async function InspectonsIdPage({
           {inspection?.telephone}
         </p>
       </div>
-      {inspection?.status === 10 && (
+      {inspection?.status === APP_STATUS_CODES[10] && (
         <FileUploadDemo inspectionId={inspectionsId} />
       )}
       <div className="grid max-w-4xl grid-cols-2 gap-2">
@@ -63,7 +64,7 @@ export default async function InspectonsIdPage({
           }
         })}
       </div>
-      {inspection?.status === 10 && (
+      {inspection?.status === APP_STATUS_CODES[10] && (
         <div className="flex w-fit items-center justify-between">
           <FinishJob
             name={inspection?.full_name || ""}

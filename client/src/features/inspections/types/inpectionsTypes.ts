@@ -16,14 +16,18 @@ interface InspectionBase {
   images?: InspectionImages[];
 }
 
-export interface InspectionGet extends InspectionBase {
+export interface InspectionISO extends InspectionBase {
   inspection_start: DateISOStr;
   inspection_finish: DateISOStr;
 }
 
-export interface Inspection extends InspectionBase {
+export interface Inspection
+  extends Omit<InspectionBase, "status" | "location"> {
   inspection_start: DateLocalStr;
   inspection_finish: DateLocalStr;
+  status: string;
+  location: string;
+  locationId: number;
 }
 
 export interface InspectionImages {

@@ -22,13 +22,14 @@ import {
 import { useActionState, useTransition } from "react";
 import { inspectionSchema, InspectionSchema } from "../inspectionSchema";
 import { editInspectionAction } from "../actions/inspectionsActions";
+import { Inspection } from "../types/inpectionsTypes";
 
 export default function EditInspectionForm({
   location,
   editData,
 }: {
   location: Location[];
-  editData: InspectionSchema | undefined;
+  editData: Inspection | undefined;
 }) {
   const {
     register,
@@ -41,7 +42,7 @@ export default function EditInspectionForm({
       address: editData?.address,
       telephone: editData?.telephone,
       full_name: editData?.full_name,
-      location: editData?.location,
+      location: editData?.locationId,
     },
     resolver: zodResolver(inspectionSchema),
     mode: "onChange",

@@ -16,8 +16,12 @@ export interface AppointmentISO extends AppointmentBase {
   appointment_date: DateISOStr;
 }
 
-export interface Appointment extends AppointmentBase {
+export interface Appointment
+  extends Omit<AppointmentBase, "status" | "location"> {
   appointment_date: DateLocalStr;
+  status: string;
+  location: string;
+  locationId: number;
 }
 
 export interface AppointmentPost

@@ -27,30 +27,17 @@ export const inspectionTableColumns: ColumnDef<Inspection>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row, table }) => {
+    cell: ({ row }) => {
       const code = row.original.status;
 
-      const statusCode = table.options.meta?.statusCodes?.find(
-        (data) => data.value === code,
-      );
-      const variant = statusCode!.label.replace(" ", "_") as StatusColors;
+      const variant = code.replace(" ", "_") as StatusColors;
 
-      return (
-        <StatusCodeColors variant={variant}>
-          {statusCode!.label}
-        </StatusCodeColors>
-      );
+      return <StatusCodeColors variant={variant}>{code}</StatusCodeColors>;
     },
   },
   {
     accessorKey: "location",
     header: "Location",
-    cell: ({ row, table }) => {
-      const location = table.options.meta?.locations?.find(
-        (item) => item.id === row.original.location,
-      );
-      return location?.name;
-    },
   },
   {
     id: "Appointment Actions",

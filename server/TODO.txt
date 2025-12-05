@@ -5,3 +5,8 @@ another think is how to make the permission and what can a user do
 
 i should change the frontend to save the data files and send only metadata to the backend no second 
 send data to the server only one time the backend should only move the files from the "quarantine" folder to the folder we use
+
+
+need to remake the api and use patch method and 
+when we need only to use put method for the updates and finishes of the app
+use of the axios api and make request %loader

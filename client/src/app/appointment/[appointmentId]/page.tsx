@@ -7,7 +7,7 @@ import {
   FinishAppointmentAction,
 } from "@/features/appointment/actions/createAppointmentAction";
 import { getAppointmentById } from "@/features/appointment/fetchers";
-import { getStatusCodes } from "@/shared/fetchers";
+import { APP_STATUS_CODES } from "@/shared/statusCodes";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 //TODO: need refactor all the logic here and the StatusCode need the most Refactor
@@ -18,15 +18,8 @@ export default async function AppointmentIdPage({
 }) {
   const { appointmentId } = await params;
   const appointment = await getAppointmentById(appointmentId);
-  const statusCodes = await getStatusCodes();
 
   if (!appointment) {
-    return <div>Try Again Later</div>;
-  }
-  const statusCode = statusCodes.find(
-    (item) => item.value === appointment.status,
-  )?.label;
-  if (!statusCode) {
     return <div>Try Again Later</div>;
   }
   return (
@@ -36,9 +29,9 @@ export default async function AppointmentIdPage({
         <div className="flex justify-between">
           <p>{appointment.full_name}</p>
           <StatusCodeColors
-            variant={statusCode.replace(" ", "_") as StatusColors}
+            variant={appointment.status.replace(" ", "_") as StatusColors}
           >
-            {statusCode}
+            {appointment.status}
           </StatusCodeColors>
         </div>
         <div className="flex justify-between">
@@ -50,7 +43,7 @@ export default async function AppointmentIdPage({
           <p>{appointment.location}</p>
         </div>
 
-        {appointment.status === 10 && (
+        {appointment.status === APP_STATUS_CODES[10] && (
           <div className="flex w-fit items-center justify-between">
             <FinishJob
               name={appointment.full_name}
