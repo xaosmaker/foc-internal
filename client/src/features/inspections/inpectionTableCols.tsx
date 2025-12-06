@@ -5,6 +5,7 @@ import DropDownActions from "@/components/DropDownActions";
 import Link from "next/link";
 import { Pencil } from "lucide-react";
 import { Inspection } from "./types/inpectionsTypes";
+import { APP_STATUS_CODES } from "@/shared/statusCodes";
 
 export const inspectionTableColumns: ColumnDef<Inspection>[] = [
   {
@@ -43,6 +44,9 @@ export const inspectionTableColumns: ColumnDef<Inspection>[] = [
     id: "Appointment Actions",
     header: "Action",
     cell: ({ row: { original } }) => {
+      if (original.status === APP_STATUS_CODES[12]) {
+        return;
+      }
       return (
         <DropDownActions
           items={[

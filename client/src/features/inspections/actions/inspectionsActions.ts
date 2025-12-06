@@ -1,14 +1,9 @@
 "use server";
 import { BASE_URL } from "@/lib/baseUrl";
 import { InspectionSchema } from "../inspectionSchema";
-import {
-  baseDeleteRequest,
-  basePatchRequest,
-  basePutRequest,
-} from "@/lib/baseRequests";
+import { baseApiRequest } from "@/lib/baseRequests";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { revalidatePath } from "next/cache";
 
 export async function editInspectionAction(
   _previousState: undefined,
@@ -16,7 +11,8 @@ export async function editInspectionAction(
 ) {
   let res;
   try {
-    res = await basePutRequest({
+    res = await baseApiRequest({
+      method: "PUT",
       url: `${BASE_URL}/api/inspections/${data.id}/`,
       data: data,
     });
@@ -35,7 +31,9 @@ export async function deleteInspectionAction(
   id: string,
 ) {
   try {
-    await baseDeleteRequest({
+    await baseApiRequest({
+      method: "DELETE",
+
       url: `${BASE_URL}/api/inspections/${id}/`,
     });
   } catch (e) {
@@ -77,7 +75,8 @@ export async function finishInspectionAction(
 ) {
   let res;
   try {
-    res = await basePatchRequest({
+    res = await baseApiRequest({
+      method: "PATCH",
       url: `${BASE_URL}/api/inspections/${id}/`,
     });
   } catch (e) {
@@ -86,6 +85,5 @@ export async function finishInspectionAction(
   console.log(res);
   if (res && res.status === 204) {
     return redirect(`/inspections`);
-    redirect(`/inspections`);
   }
 }

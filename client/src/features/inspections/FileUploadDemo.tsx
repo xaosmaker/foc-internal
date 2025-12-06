@@ -6,7 +6,7 @@ import { useActionState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 export function FileUploadDemo({ inspectionId }: { inspectionId: string }) {
-  const { control, watch, handleSubmit } = useForm<{
+  const { control, handleSubmit } = useForm<{
     files: File[];
     id: string;
   }>({

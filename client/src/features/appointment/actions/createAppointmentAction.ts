@@ -1,11 +1,6 @@
 "use server";
 
-import {
-  baseDeleteRequest,
-  basePatchRequest,
-  basePostRequest,
-  basePutRequest,
-} from "@/lib/baseRequests";
+import { baseApiRequest } from "@/lib/baseRequests";
 import { BASE_URL } from "@/lib/baseUrl";
 import { AppointmentPost } from "../types";
 import { redirect } from "next/navigation";
@@ -16,7 +11,8 @@ export async function createAppointmentAction(
 ) {
   let res;
   try {
-    res = await basePostRequest({
+    res = await baseApiRequest({
+      method: "POST",
       url: `${BASE_URL}/api/appointments/`,
       data: formData,
     });
@@ -34,7 +30,8 @@ export async function deleteAppointmentAction(
   id: string,
 ) {
   try {
-    await baseDeleteRequest({
+    await baseApiRequest({
+      method: "DELETE",
       url: `${BASE_URL}/api/appointments/${id}/`,
     });
   } catch (e) {
@@ -49,7 +46,8 @@ export async function editAppointmentAction(
 ) {
   let res;
   try {
-    res = await basePutRequest({
+    res = await baseApiRequest({
+      method: "PUT",
       url: `${BASE_URL}/api/appointments/${data.id}/`,
       data: data,
     });
@@ -68,7 +66,8 @@ export async function FinishAppointmentAction(
 ) {
   let res;
   try {
-    res = await basePatchRequest({
+    res = await baseApiRequest({
+      method: "PATCH",
       url: `${BASE_URL}/api/appointments/${id}/`,
     });
   } catch (e) {

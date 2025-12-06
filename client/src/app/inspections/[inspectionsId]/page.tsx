@@ -51,6 +51,7 @@ export default async function InspectonsIdPage({
                 <img
                   src={item.file_data}
                   className="h-full w-full object-cover"
+                  alt="inspection img"
                 />
               </div>
             );

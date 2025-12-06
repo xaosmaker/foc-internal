@@ -58,6 +58,7 @@ export const appointmentTableColumns: ColumnDef<Appointment>[] = [
     header: "Action",
     cell: ({ row: { original } }) => {
       if (original.status === APP_STATUS_CODES[50]) {
+        //status code 50 is completed
         return;
       }
       return (
